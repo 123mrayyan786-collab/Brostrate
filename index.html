@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Happy Birthday Linta ✨</title>
+<style>
+
+/* ============================================================
+   FONTS & GLOBAL RESET
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600&family=Dancing+Script:wght@400;700&display=swap');
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --pink:      #f9a8d4;
+  --deep-pink: #ec4899;
+  --lavender:  #c4b5fd;
+  --white:     #ffffff;
+  --silver:    #e2e8f0;
+  --glow-pink: rgba(249,168,212,0.5);
+  --glow-lav:  rgba(196,181,253,0.4);
+  --glass-bg:  rgba(255,255,255,0.12);
+  --glass-border: rgba(255,255,255,0.25);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #1a0533 0%, #2d1b69 30%, #4a0e2c 60%, #1a0533 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: #fff;
+}
+
+/* ============================================================
+   PARTICLE CANVAS (full-screen sparkles)
+   ============================================================ */
+#particle-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================
+   MUSIC BUTTON
+   ============================================================ */
+#music-btn {
+  position: fixed;
+  top: 20px; right: 20px;
+  z-index: 9999;
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 50px;
+  padding: 10px 20px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  display: flex; align-items: center; gap: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px var(--glow-pink);
+}
+#music-btn:hover {
+  background: rgba(255,255,255,0.2);
+  transform: scale(1.05);
+}
+#music-icon { font-size: 18px; animation: pulse-music 1.5s infinite; }
+@keyframes pulse-music { 0%,100%{transform:scale(1);} 50%{transform:scale(1.2);} }
+
+/* ============================================================
+   START / SPLASH SCREEN
+   ============================================================ */
+#start-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0d0020 0%, #1a0533 40%, #2d1b69 70%, #0d0020 100%);
+  transition: opacity 1s ease, transform 1s ease;
+}
+#start-screen.hide {
+  opacity: 0;
+  transform: scale(1.1);
+  pointer-events: none;
+}
+
+.start-tagline {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  color: var(--pink);
+  text-align: center;
+  padding: 0 20px;
+  text-shadow: 0 0 30px var(--glow-pink), 0 0 60px var(--glow-pink);
+  animation: fadeSlideUp 1.5s ease forwards;
+  opacity: 0;
+  margin-bottom: 60px;
+}
+
+/* Gift Box */
+.gift-wrap {
+  cursor: pointer;
+  animation: floatGift 3s ease-in-out infinite;
+  position: relative;
+}
+.gift-wrap:hover .gift-box { transform: scale(1.08); }
+
+@keyframes floatGift {
+  0%,100% { transform: translateY(0px); }
+  50%      { transform: translateY(-18px); }
+}
+
+.gift-box {
+  width: 130px; height: 120px;
+  background: linear-gradient(135deg, #ec4899, #c026d3);
+  border-radius: 12px;
+  position: relative;
+  transition: transform 0.3s ease;
+  box-shadow: 0 0 40px var(--glow-pink), 0 20px 60px rgba(236,72,153,0.4);
+}
+.gift-lid {
+  width: 150px; height: 30px;
+  background: linear-gradient(135deg, #f9a8d4, #e879f9);
+  border-radius: 8px;
+  position: absolute;
+  top: -18px; left: -10px;
+  box-shadow: 0 0 20px var(--glow-lav);
+  transition: transform 0.5s ease;
+}
+.gift-wrap:hover .gift-lid {
+  transform: translateY(-20px) rotate(-5deg);
+}
+.gift-ribbon-v {
+  width: 20px; height: 100%;
+  background: linear-gradient(180deg, #fde68a, #f59e0b);
+  position: absolute; left: 50%; transform: translateX(-50%);
+  border-radius: 4px;
+}
+.gift-ribbon-h {
+  width: 100%; height: 20px;
+  background: linear-gradient(90deg, #fde68a, #f59e0b);
+  position: absolute; top: 50%; transform: translateY(-50%);
+  border-radius: 4px;
+}
+.gift-bow {
+  position: absolute;
+  top: -38px; left: 50%; transform: translateX(-50%);
+  font-size: 36px;
+  animation: rotateBow 2s ease-in-out infinite;
+}
+@keyframes rotateBow { 0%,100%{transform:translateX(-50%) rotate(-5deg);} 50%{transform:translateX(-50%) rotate(5deg);} }
+
+.click-hint {
+  margin-top: 28px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: blink 1.5s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+/* ============================================================
+   MAIN CONTENT
+   ============================================================ */
+#main-content {
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1.2s ease, transform 1.2s ease;
+}
+#main-content.show { opacity: 1; transform: translateY(0); }
+
+/* ============================================================
+   SECTION COMMON
+   ============================================================ */
+section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  position: relative;
+}
+
+/* ============================================================
+   GLASS CARD
+   ============================================================ */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 28px;
+  padding: 48px 40px;
+  max-width: 760px;
+  width: 100%;
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.2),
+    0 0 60px var(--glow-pink);
+  position: relative;
+  overflow: hidden;
+}
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 60%);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
+#hero { text-align: center; }
+
+.hero-subtitle {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1rem, 3vw, 1.4rem);
+  color: var(--lavender);
+  letter-spacing: 3px;
+  margin-bottom: 16px;
+  animation: fadeSlideUp 1s ease both;
+  opacity: 0;
+  animation-delay: 0.3s;
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 8vw, 6rem);
+  font-weight: 700;
+  background: linear-gradient(135deg, #fff 0%, var(--pink) 40%, var(--lavender) 70%, #fff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+  animation: fadeSlideUp 1s ease both;
+  opacity: 0;
+  animation-delay: 0.6s;
+  text-shadow: none;
+  filter: drop-shadow(0 0 30px var(--glow-pink));
+}
+.hero-name {
+  display: block;
+  font-style: italic;
+  font-size: clamp(3.5rem, 10vw, 7.5rem);
+  background: linear-gradient(135deg, var(--pink) 0%, #fff 40%, var(--lavender) 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 40px var(--glow-pink));
+}
+.hero-date {
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-top: 20px;
+  animation: fadeSlideUp 1s ease both;
+  opacity: 0;
+  animation-delay: 0.9s;
+}
+.hero-emoji-row {
+  font-size: 2rem;
+  margin-top: 28px;
+  animation: fadeSlideUp 1s ease both;
+  opacity: 0;
+  animation-delay: 1.2s;
+  display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;
+}
+.emoji-float { display: inline-block; animation: floatEmoji 3s ease-in-out infinite; }
+.emoji-float:nth-child(2) { animation-delay: 0.5s; }
+.emoji-float:nth-child(3) { animation-delay: 1s; }
+.emoji-float:nth-child(4) { animation-delay: 1.5s; }
+@keyframes floatEmoji { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-12px);} }
+
+@keyframes fadeSlideUp {
+  from { opacity:0; transform:translateY(30px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* ============================================================
+   MESSAGE SECTION (typewriter)
+   ============================================================ */
+#message { text-align: center; }
+
+.section-label {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.1rem;
+  color: var(--lavender);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.message-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  line-height: 1.9;
+  color: rgba(255,255,255,0.9);
+  min-height: 280px;
+}
+.cursor {
+  display: inline-block;
+  width: 2px; height: 1.2em;
+  background: var(--pink);
+  margin-left: 3px;
+  vertical-align: middle;
+  animation: blink-cursor 0.8s infinite;
+}
+@keyframes blink-cursor { 0%,100%{opacity:1;} 50%{opacity:0;} }
+
+/* ============================================================
+   PHOTO MEMORIES SECTION
+   ============================================================ */
+#memories { text-align: center; }
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  background: linear-gradient(135deg, var(--pink), var(--lavender));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 16px;
+}
+
+/* ---- SINGLE PHOTO SLOT ---- */
+/*
+  HOW TO ADD YOUR PHOTO:
+  Replace the src inside .photo-slot img with your image path.
+  Example: src="linta-photo.jpg"
+  You can duplicate .photo-slot blocks to add more photos.
+*/
+.photos-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  margin-top: 32px;
+  width: 100%;
+  max-width: 820px;
+}
+
+.photo-slot {
+  position: relative;
+  width: 220px;
+  height: 260px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 2px solid var(--glass-border);
+  box-shadow: 0 0 30px var(--glow-pink), 0 8px 24px rgba(0,0,0,0.4);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  cursor: pointer;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+}
+.photo-slot:hover {
+  transform: scale(1.06) rotate(1deg);
+  box-shadow: 0 0 50px var(--glow-pink), 0 16px 40px rgba(236,72,153,0.4);
+}
+.photo-slot img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.photo-slot:hover img { transform: scale(1.08); }
+
+.photo-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.6));
+  padding: 20px 14px 14px;
+  color: #fff;
+  font-family: 'Dancing Script', cursive;
+  font-size: 1rem;
+  text-align: center;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+.photo-slot:hover .photo-overlay { transform: translateY(0); }
+
+/* placeholder when no image provided */
+.photo-placeholder {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.4);
+  font-size: 0.85rem;
+  gap: 10px;
+}
+.photo-placeholder span { font-size: 2.5rem; }
+
+/* ============================================================
+   SURPRISE SECTION
+   ============================================================ */
+#surprise { text-align: center; }
+
+.surprise-btn {
+  position: relative;
+  background: linear-gradient(135deg, #ec4899, #c026d3, #7c3aed);
+  border: none;
+  border-radius: 60px;
+  padding: 18px 48px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  letter-spacing: 1px;
+  box-shadow: 0 0 40px var(--glow-pink), 0 8px 24px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  margin-top: 32px;
+}
+.surprise-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+  border-radius: inherit;
+}
+.surprise-btn:hover {
+  transform: scale(1.07);
+  box-shadow: 0 0 60px var(--glow-pink), 0 16px 40px rgba(236,72,153,0.5);
+}
+.surprise-btn:active { transform: scale(0.97); }
+
+.surprise-message {
+  display: none;
+  margin-top: 40px;
+  animation: revealSurprise 0.8s ease forwards;
+}
+.surprise-message.show { display: block; }
+
+@keyframes revealSurprise {
+  from { opacity:0; transform: scale(0.8) translateY(20px); }
+  to   { opacity:1; transform: scale(1) translateY(0); }
+}
+.surprise-inner {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  line-height: 1.9;
+  color: rgba(255,255,255,0.92);
+  text-align: left;
+}
+.surprise-inner .big-heart {
+  font-size: 3rem;
+  display: block;
+  text-align: center;
+  margin-bottom: 16px;
+  animation: heartbeat 1.2s ease-in-out infinite;
+}
+@keyframes heartbeat {
+  0%,100%{transform:scale(1);} 14%{transform:scale(1.3);} 28%{transform:scale(1);}
+  42%{transform:scale(1.2);} 70%{transform:scale(1);}
+}
+
+/* ============================================================
+   TEMPLATES SECTION
+   ============================================================ */
+#templates { text-align: center; }
+
+.templates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  width: 100%;
+  max-width: 900px;
+  margin-top: 40px;
+}
+.template-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 28px 24px;
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+.template-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 40px var(--glow-lav), 0 12px 32px rgba(0,0,0,0.3);
+}
+.template-badge {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.badge-cute      { background: rgba(249,168,212,0.25); color: var(--pink); border: 1px solid var(--pink); }
+.badge-elegant   { background: rgba(196,181,253,0.2); color: var(--lavender); border: 1px solid var(--lavender); }
+.badge-short     { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.3); }
+.badge-emotional { background: rgba(236,72,153,0.2); color: #f9a8d4; border: 1px solid #f9a8d4; }
+
+.template-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: #fff;
+  margin-bottom: 12px;
+}
+.template-body {
+  font-size: 0.88rem;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.75);
+  font-style: italic;
+}
+
+/* ============================================================
+   FLOATING HEARTS (decorative)
+   ============================================================ */
+.floating-hearts-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.fheart {
+  position: absolute;
+  bottom: -60px;
+  font-size: 1.5rem;
+  animation: floatHeart linear infinite;
+  opacity: 0;
+}
+@keyframes floatHeart {
+  0%   { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
+  10%  { opacity: 0.8; }
+  90%  { opacity: 0.6; }
+  100% { transform: translateY(-110vh) rotate(360deg) scale(1.2); opacity: 0; }
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  text-align: center;
+  padding: 48px 24px;
+  color: rgba(255,255,255,0.4);
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  position: relative; z-index: 1;
+}
+footer span {
+  color: var(--pink);
+}
+
+/* ============================================================
+   DIVIDER
+   ============================================================ */
+.glow-divider {
+  width: 80px; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--pink), var(--lavender), transparent);
+  border-radius: 3px;
+  margin: 20px auto 0;
+  box-shadow: 0 0 20px var(--glow-pink);
+}
+
+/* ============================================================
+   SCROLL ANIMATION (reveal on scroll)
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 600px) {
+  .glass-card { padding: 32px 20px; }
+  .photo-slot { width: 160px; height: 200px; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     AUDIO — Replace 'your-music.mp3' with your music file path
+     ============================================================ -->
+<audio id="bg-music" loop>
+  <!-- 🎵 CHANGE THIS: Replace src with your music file -->
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg"/>
+</audio>
+
+<!-- Music Toggle Button -->
+<button id="music-btn" onclick="toggleMusic()">
+  <span id="music-icon">🎵</span>
+  <span id="music-label">Play Music</span>
+</button>
+
+<!-- Particle Canvas -->
+<canvas id="particle-canvas"></canvas>
+
+<!-- Floating Hearts -->
+<div class="floating-hearts-container" id="hearts-container"></div>
+
+<!-- ============================================================
+     START / SPLASH SCREEN
+     ============================================================ -->
+<div id="start-screen">
+  <p class="start-tagline">✨ A little surprise made especially for Linta ✨</p>
+  <div class="gift-wrap" onclick="openCard()">
+    <div class="gift-bow">🎀</div>
+    <div class="gift-box">
+      <div class="gift-lid"></div>
+      <div class="gift-ribbon-v"></div>
+      <div class="gift-ribbon-h"></div>
+    </div>
+  </div>
+  <p class="click-hint">tap the gift to open ↑</p>
+</div>
+
+<!-- ============================================================
+     MAIN CONTENT
+     ============================================================ -->
+<div id="main-content">
+
+  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <section id="hero">
+    <p class="hero-subtitle">🎂 &nbsp; 3rd July &nbsp; 🎂</p>
+    <h1 class="hero-title">
+      Happy Birthday
+      <span class="hero-name">Linta</span>
+    </h1>
+    <p class="hero-date">July 3 &nbsp;·&nbsp; Your Special Day</p>
+    <div class="hero-emoji-row">
+      <span class="emoji-float">🌸</span>
+      <span class="emoji-float">✨</span>
+      <span class="emoji-float">🎂</span>
+      <span class="emoji-float">💕</span>
+      <span class="emoji-float">🌙</span>
+    </div>
+  </section>
+
+  <!-- ── MESSAGE ───────────────────────────────────────────── -->
+  <section id="message">
+    <div class="glass-card reveal">
+      <p class="section-label">✨ A message for you</p>
+      <div class="glow-divider" style="margin:0 0 32px 0;"></div>
+      <p class="message-text" id="typewriter-text"></p>
+      <span class="cursor" id="cursor"></span>
+    </div>
+  </section>
+
+  <!-- ── MEMORIES / PHOTOS ─────────────────────────────────── -->
+  <section id="memories">
+    <h2 class="section-title reveal">Picture Gallery 💖</h2>
+    <p class="reveal" style="color:rgba(255,255,255,0.55); font-size:0.9rem; margin-top:8px;">
+      Hover over each photo to reveal the caption ✨
+    </p>
+    <div class="photos-container reveal">
+
+      <!--
+        ════════════════════════════════════════════════════
+        📸 HOW TO ADD YOUR PHOTOS:
+        1. Create a folder named `photos` inside the Birthday Card folder.
+        2. Put the four image files there.
+        3. Name them linta1.jpg, linta2.jpg, linta3.jpg, linta4.jpg
+        4. Refresh the page to see them inside the card.
+        ════════════════════════════════════════════════════
+      -->
+
+<!-- Photo Slot 1 -->
+      <div class="photo-slot">
+        <img src="photos/WhatsApp Image 2026-07-02 at 8.39.31 PM.jpeg" alt="Linta Photo 1"
+             onerror="this.style.display='none'; this.parentElement.querySelector('.photo-placeholder').style.display='flex';" />
+        <div class="photo-placeholder" style="display:none;">
+          <span>🌸</span>
+          Photo 1 missing
+        </div>
+        <div class="photo-overlay">Linta in her beautiful dress 🌸</div>
+      </div>
+
+      <!-- Photo Slot 2 -->
+      <div class="photo-slot">
+        <img src="photos/WhatsApp Image 2026-07-02 at 8.39.31 PM (1).jpeg" alt="Linta Photo 2"
+             onerror="this.style.display='none'; this.parentElement.querySelector('.photo-placeholder').style.display='flex';" />
+        <div class="photo-placeholder" style="display:none;">
+          <span>💕</span>
+          Photo 2 missing
+        </div>
+        <div class="photo-overlay">Beautiful close-up 💕</div>
+      </div>
+
+      <!-- Photo Slot 3 -->
+      <div class="photo-slot">
+        <img src="photos/WhatsApp Image 2026-07-02 at 8.39.31 PM (2).jpeg" alt="Linta Photo 3"
+             onerror="this.style.display='none'; this.parentElement.querySelector('.photo-placeholder').style.display='flex';" />
+        <div class="photo-placeholder" style="display:none;">
+          <span>✨</span>
+          Photo 3 missing
+        </div>
+        <div class="photo-overlay">Soft glowing portrait ✨</div>
+      </div>
+
+      <!-- Photo Slot 4 -->
+      <div class="photo-slot">
+        <img src="photos/WhatsApp Image 2026-07-02 at 9.15.38 PM (1).jpeg" alt="Linta Photo 4"
+             onerror="this.style.display='none'; this.parentElement.querySelector('.photo-placeholder').style.display='flex';" />
+        <div class="photo-placeholder" style="display:none;">
+          <span>💝</span>
+          Photo 4 missing
+        </div>
+        <div class="photo-overlay">A precious moment together 💝</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── SURPRISE ───────────────────────────────────────────── -->
+  <section id="surprise">
+    <div class="glass-card reveal" style="text-align:center;">
+      <p class="section-label">🎁 Your Special Surprise</p>
+      <div class="glow-divider" style="margin:0 auto 20px;"></div>
+      <p style="color:rgba(255,255,255,0.7); font-size:0.95rem; margin-bottom:8px;">
+        There's something hidden just for you, Linta...
+      </p>
+      <button class="surprise-btn" onclick="revealSurprise()">
+        Open Your Surprise 🎁
+      </button>
+      <div class="surprise-message" id="surprise-message">
+        <div class="glass-card" style="margin-top:24px; box-shadow:0 0 40px var(--glow-lav);">
+          <div class="surprise-inner">
+            <span class="big-heart">💝</span>
+            Dear Linta,<br/><br/>
+            On this magical day, I want you to know that the world is a
+            brighter, more beautiful place simply because <em>you are in it.</em><br/><br/>
+            Your laughter is a melody the universe composed just for this moment.
+            Your heart — kind, warm, and full of light — is one of the rarest
+            gifts life has ever offered.<br/><br/>
+            May every single wish you've quietly kept inside your heart bloom
+            into reality. May every dream you've ever dared to dream find its
+            way home to you — right on time, right in the most beautiful way.<br/><br/>
+            You deserve every star in the sky, every petal in the garden,
+            every note of every love song ever written. And so much more.<br/><br/>
+            <strong>Happy Birthday, Linta. ❤️</strong><br/>
+            Today, the whole world celebrates <em>you.</em>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TEMPLATES ─────────────────────────────────────────── -->
+  <section id="templates">
+    <h2 class="section-title reveal">Birthday Wish Templates 💌</h2>
+    <p class="reveal" style="color:rgba(255,255,255,0.55); font-size:0.9rem; margin-top:8px;">
+      Copy, personalise, and send with love ✨
+    </p>
+    <div class="templates-grid reveal">
+
+      <!-- Cute -->
+      <div class="template-card">
+        <span class="template-badge badge-cute">🎀 Cute</span>
+        <p class="template-title">The Sweetest Wish</p>
+        <p class="template-body">
+          "Hey Linta! 🎂✨ It's your day, it's your time, it's YOUR moment!
+          May your birthday be as sweet as your smile, as bright as your eyes,
+          and as beautiful as everything you are. Wishing you all the cake,
+          all the confetti, and all the love in the world! 🌸💕"
+        </p>
+      </div>
+
+      <!-- Elegant -->
+      <div class="template-card">
+        <span class="template-badge badge-elegant">💜 Elegant</span>
+        <p class="template-title">Timeless Wishes</p>
+        <p class="template-body">
+          "Dear Linta, on this beautiful occasion of your birthday, I wish you
+          grace, joy, and everything your heart desires. May every chapter of
+          your life be written with moments of wonder, love, and fulfilment.
+          You are truly one of a kind — celebrate yourself today, and always. 🌹✨"
+        </p>
+      </div>
+
+      <!-- Short Aesthetic -->
+      <div class="template-card">
+        <span class="template-badge badge-short">🤍 Short Aesthetic</span>
+        <p class="template-title">Less Words, More Magic</p>
+        <p class="template-body">
+          "Linta ✨ — born to bloom, made to glow.
+          Happy Birthday, darling. 🌸
+          May this year be your most beautiful one yet. 💫"
+        </p>
+      </div>
+
+      <!-- Emotional -->
+      <div class="template-card">
+        <span class="template-badge badge-emotional">💗 Emotional</span>
+        <p class="template-title">From the Heart</p>
+        <p class="template-body">
+          "Linta, some people come into your life and quietly change everything —
+          not with grand gestures, but with their kindness, their warmth, and the
+          way they make ordinary moments feel extraordinary. You are that person.
+          Happy Birthday. Thank you for simply being you. ❤️"
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
+  <footer>
+    Made with <span>❤️</span> especially for <span>Linta</span> &nbsp;·&nbsp; 3rd July 🎂
+  </footer>
+
+</div><!-- end #main-content -->
+
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+
+/* ── OPEN CARD ─────────────────────────────────────────────── */
+function openCard() {
+  const start = document.getElementById('start-screen');
+  const main  = document.getElementById('main-content');
+  start.classList.add('hide');
+  setTimeout(() => {
+    start.style.display = 'none';
+    main.classList.add('show');
+    startTypewriter();
+    tryAutoPlayMusic();
+  }, 1000);
+}
+
+/* ── MUSIC ─────────────────────────────────────────────────── */
+let musicPlaying = false;
+const audio = document.getElementById('bg-music');
+audio.volume = 0.4;
+
+function tryAutoPlayMusic() {
+  audio.play().then(() => {
+    musicPlaying = true;
+    updateMusicBtn();
+  }).catch(() => {});
+}
+
+function toggleMusic() {
+  if (musicPlaying) {
+    audio.pause();
+    musicPlaying = false;
+  } else {
+    audio.play();
+    musicPlaying = true;
+  }
+  updateMusicBtn();
+}
+
+function updateMusicBtn() {
+  document.getElementById('music-icon').textContent  = musicPlaying ? '🎵' : '🔇';
+  document.getElementById('music-label').textContent = musicPlaying ? 'Pause Music' : 'Play Music';
+}
+
+/* ── TYPEWRITER ────────────────────────────────────────────── */
+/*  ✏️  CHANGE THE MESSAGE BELOW  */
+const birthdayMessage =
+`Dear Linta,
+
+Birthdays are not just about candles and cake — they are quiet reminders that you were meant to be here, to shine, to love, and to be loved.
+
+Today, on this 3rd of July, the universe pauses to celebrate one of its most beautiful creations — you.
+
+You carry so much warmth in your heart, so much light in your smile. The way you make people feel seen, heard, and valued — that is a rare and precious gift.
+
+May this year bring you adventures that take your breath away, moments that make your heart sing, and love that feels like home.
+
+You deserve every beautiful thing this world has to offer.
+
+Happy Birthday, Linta. ❤️`;
+
+let typeIndex = 0;
+let typeInterval;
+
+function startTypewriter() {
+  const el = document.getElementById('typewriter-text');
+  el.textContent = '';
+  typeIndex = 0;
+
+  // Delay so section is visible first
+  setTimeout(() => {
+    typeInterval = setInterval(() => {
+      if (typeIndex < birthdayMessage.length) {
+        const char = birthdayMessage[typeIndex];
+        el.innerHTML += char === '\n' ? '<br/>' : char;
+        typeIndex++;
+      } else {
+        clearInterval(typeInterval);
+        document.getElementById('cursor').style.display = 'none';
+      }
+    }, 28);
+  }, 800);
+}
+
+/* ── SURPRISE REVEAL ───────────────────────────────────────── */
+function revealSurprise() {
+  const msg = document.getElementById('surprise-message');
+  const btn = document.querySelector('.surprise-btn');
+  msg.classList.add('show');
+  btn.style.display = 'none';
+  launchConfetti();
+}
+
+/* ── PARTICLE CANVAS (sparkles) ─────────────────────────────── */
+const canvas = document.getElementById('particle-canvas');
+const ctx    = canvas.getContext('2d');
+let particles = [];
+
+function resizeCanvas() {
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+function createParticle() {
+  return {
+    x:    Math.random() * canvas.width,
+    y:    Math.random() * canvas.height,
+    r:    Math.random() * 2.5 + 0.5,
+    dx:   (Math.random() - 0.5) * 0.4,
+    dy:   (Math.random() - 0.5) * 0.4,
+    alpha: Math.random(),
+    dAlpha: (Math.random() - 0.5) * 0.01,
+    color: ['#f9a8d4','#c4b5fd','#ffffff','#fde68a'][Math.floor(Math.random()*4)]
+  };
+}
+
+for (let i = 0; i < 120; i++) particles.push(createParticle());
+
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => {
+    p.x += p.dx; p.y += p.dy;
+    p.alpha += p.dAlpha;
+    if (p.alpha <= 0 || p.alpha >= 1) p.dAlpha *= -1;
+    if (p.x < 0) p.x = canvas.width;
+    if (p.x > canvas.width) p.x = 0;
+    if (p.y < 0) p.y = canvas.height;
+    if (p.y > canvas.height) p.y = 0;
+
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = p.color;
+    ctx.globalAlpha = p.alpha;
+    ctx.shadowBlur = 8;
+    ctx.shadowColor = p.color;
+    ctx.fill();
+  });
+  ctx.globalAlpha = 1;
+  ctx.shadowBlur = 0;
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+/* ── FLOATING HEARTS ──────────────────────────────────────── */
+const heartEmojis = ['❤️','💕','💖','💗','💝','🌸','✨'];
+function spawnHeart() {
+  const c = document.getElementById('hearts-container');
+  const h = document.createElement('div');
+  h.className = 'fheart';
+  h.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+  h.style.left     = Math.random() * 100 + 'vw';
+  h.style.fontSize = (Math.random() * 20 + 12) + 'px';
+  const dur = Math.random() * 8 + 8;
+  h.style.animationDuration = dur + 's';
+  h.style.animationDelay    = Math.random() * 2 + 's';
+  c.appendChild(h);
+  setTimeout(() => h.remove(), (dur + 2) * 1000);
+}
+setInterval(spawnHeart, 1200);
+
+/* ── CONFETTI BURST on surprise ─────────────────────────────── */
+function launchConfetti() {
+  for (let i = 0; i < 40; i++) {
+    setTimeout(() => spawnHeart(), i * 80);
+  }
+}
+
+/* ── SCROLL REVEAL ─────────────────────────────────────────── */
+const revealEls = document.querySelectorAll('.reveal');
+const observer  = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.15 });
+revealEls.forEach(el => observer.observe(el));
+
+</script>
+</body>
+</html>
+
+
+
